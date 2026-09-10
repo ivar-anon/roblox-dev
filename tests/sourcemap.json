@@ -1,0 +1,21 @@
+{
+  "name": "SafeRemoteExample",
+  "className": "Folder",
+  "children": [
+    {
+      "name": "SafeRemote",
+      "className": "ModuleScript",
+      "filePaths": ["examples/safe-remote/SafeRemote.luau"]
+    },
+    {
+      "name": "Validators",
+      "className": "ModuleScript",
+      "filePaths": ["examples/safe-remote/Validators.luau"]
+    },
+    {
+      "name": "SafeRemote.spec",
+      "className": "ModuleScript",
+      "filePaths": ["examples/safe-remote/SafeRemote.spec.luau"]
+    }
+  ]
+}
