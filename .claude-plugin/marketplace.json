@@ -1,0 +1,16 @@
+{
+  "name": "roblox-dev",
+  "description": "Roblox/Luau game development toolkit for Claude Code — security, DataStores, performance, strict typing, architecture, UI and testing.",
+  "owner": {
+    "name": "Ivar",
+    "email": "nigliaivan@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "roblox-dev",
+      "source": "./",
+      "description": "Roblox/Luau game development toolkit: exploit-proof remotes, safe DataStores, strict typing, performance, architecture, UI and testing patterns from real production game development.",
+      "category": "gamedev"
+    }
+  ]
+}
