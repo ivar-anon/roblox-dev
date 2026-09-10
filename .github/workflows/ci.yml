@@ -33,13 +33,11 @@ jobs:
           unzip -o luau.zip && rm luau.zip
           curl -sL -o luau-lsp.zip https://github.com/JohnnyMorganz/luau-lsp/releases/latest/download/luau-lsp-linux-x86_64.zip
           unzip -o luau-lsp.zip && rm luau-lsp.zip
-          curl -sL -o selene.zip https://github.com/Kampfkarren/selene/releases/download/0.29.0/selene-0.29.0-linux.zip
-          unzip -o selene.zip && rm selene.zip
-          chmod +x luau luau-analyze luau-lsp selene
+          chmod +x luau luau-analyze luau-lsp
           curl -sL -o "$HOME/globalTypes.d.luau" https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/scripts/globalTypes.d.luau
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
-      - name: Type-check (strict) with Roblox definitions
+      - name: Type-check (strict) and lint with Roblox definitions
         run: |
           luau-lsp analyze \
             --defs="$HOME/globalTypes.d.luau" \
@@ -49,9 +47,6 @@ jobs:
 
       - name: Run standalone tests
         run: luau tests/run.luau
-
-      - name: Lint
-        run: selene examples tests
 
       - name: Check formatting
         uses: JohnnyMorganz/stylua-action@v4
