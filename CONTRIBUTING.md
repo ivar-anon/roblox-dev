@@ -22,9 +22,11 @@ in **English or Spanish** are equally welcome, for both code and docs.
    more than "validate your inputs".
 3. **Dense beats long.** Skills are loaded into a working context; padding
    has a real cost. Cut anything Claude already does right without help.
-4. **Code samples are `--!strict`** and must pass Selene + StyLua
-   (`selene examples && stylua --check examples` — CI enforces this for
-   `examples/`).
+4. **Code samples are `--!strict`** and must type-check and stay formatted.
+   CI runs `luau-lsp analyze` (strict, with Roblox definitions), the
+   standalone tests, and `stylua --check` over `examples/` and `tests/`.
+   Selene is configured (`selene.toml`) for local linting — run
+   `selene examples` before you push.
 
 ## Workflow
 
