@@ -1,0 +1,21 @@
+{
+  "name": "roblox-dev",
+  "description": "Roblox/Luau game development toolkit: exploit-proof remotes, safe DataStores, strict typing, performance, architecture, UI and testing patterns from real production game development. Skills auto-activate when you work on Luau code; commands scaffold projects and systems.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Ivar",
+    "email": "nigliaivan@gmail.com"
+  },
+  "homepage": "https://github.com/ivar-anon/roblox-dev",
+  "repository": "https://github.com/ivar-anon/roblox-dev",
+  "license": "MIT",
+  "keywords": [
+    "roblox",
+    "luau",
+    "gamedev",
+    "rojo",
+    "datastore",
+    "security",
+    "game-development"
+  ]
+}
