@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate-plugin:
+    name: Plugin structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate plugin structure
+        run: node scripts/validate.mjs
+
+  luau:
+    name: Luau type-check, tests, lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Luau toolchain
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          cd "$HOME/.local/bin"
+          curl -sL -o luau.zip https://github.com/luau-lang/luau/releases/latest/download/luau-ubuntu.zip
+          unzip -o luau.zip && rm luau.zip
+          curl -sL -o luau-lsp.zip https://github.com/JohnnyMorganz/luau-lsp/releases/latest/download/luau-lsp-linux-x86_64.zip
+          unzip -o luau-lsp.zip && rm luau-lsp.zip
+          curl -sL -o selene.zip https://github.com/Kampfkarren/selene/releases/download/0.29.0/selene-0.29.0-linux.zip
+          unzip -o selene.zip && rm selene.zip
+          chmod +x luau luau-analyze luau-lsp selene
+          curl -sL -o "$HOME/globalTypes.d.luau" https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/scripts/globalTypes.d.luau
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Type-check (strict) with Roblox definitions
+        run: |
+          luau-lsp analyze \
+            --defs="$HOME/globalTypes.d.luau" \
+            --sourcemap=tests/sourcemap.json \
+            examples/safe-remote/SafeRemote.luau \
+            examples/safe-remote/Validators.luau
+
+      - name: Run standalone tests
+        run: luau tests/run.luau
+
+      - name: Lint
+        run: selene examples tests
+
+      - name: Check formatting
+        uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+          args: --check examples tests
